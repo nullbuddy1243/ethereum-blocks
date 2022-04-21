@@ -5,20 +5,27 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: ConverterRegistryContract
-    network: rinkeby
+    name: market
+    network: mainnet
     source:
-      address: "0x0ddff327ddf7fe838e3e63d02001ef23ad1ede8e"
-      abi: ConverterRegistryContract
+      address: "0x5d28FC5BC1065DA8dEC396D0c5D20c524CA83278"
+      abi: market
+      startBlock: 20296479 # marketplace launch
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - ConverterAddition
+        # - ConverterAddition
+        - Buy
+        - Sell
+        - Cancel
       abis:
-        - name: ConverterRegistryContract
-          file: ./abis/ConverterRegistryContract.json
+        # - name: ConverterRegistryContract
+        #   file: ./abis/ConverterRegistryContract.json
+        - name: market
+          file: ./abis/market.json
       blockHandlers:
-        - handler: handleBlock
-      file: ./src/mappings/blocks.ts
+        # - handler: handleBlock
+        - handler: marketplaceEvent
+      file: ./src/mappings/market.ts
